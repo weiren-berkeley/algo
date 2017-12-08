@@ -146,6 +146,10 @@
             <string>IKEv2</string>
         </dict>
         <dict>
+{% if inject_p12_password is defined and inject_p12_password|bool == true %}
+            <key>Password</key>
+            <string>{{ easyrsa_p12_export_password }}</string>
+{% endif %}
             <key>PayloadCertificateFileName</key>
             <string>{{ item.0 }}.p12</string>
             <key>PayloadContent</key>
