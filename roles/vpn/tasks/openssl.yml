@@ -94,7 +94,7 @@
     shell: >
       {{ openssl_bin }} req -utf8 -new
       -newkey ec:ecparams/secp384r1.pem
-      -config <(cat openssl.cnf <(printf "[basic_exts]\nsubjectAltName=DNS:{{ item }}"))
+      -config <(cat openssl.cnf <(printf "[basic_exts]\nsubjectAltName={{ subjectAltName_USER }}"))
       -keyout private/{{ item }}.key
       -out reqs/{{ item }}.req -nodes
       -passin pass:"{{ CA_password }}"
@@ -102,7 +102,7 @@
       {{ openssl_bin }} ca -utf8
       -in reqs/{{ item }}.req
       -out certs/{{ item }}.crt
-      -config <(cat openssl.cnf <(printf "[basic_exts]\nsubjectAltName=DNS:{{ item }}"))
+      -config <(cat openssl.cnf <(printf "[basic_exts]\nsubjectAltName={{ subjectAltName_USER }}"))
       -days 3650 -batch
       -passin pass:"{{ CA_password }}"
       -subj "/CN={{ item }}" &&
